@@ -6,7 +6,7 @@ public class OrderLogs {
     public OrderLogs(){
         orderlogs=new ArrayDeque<>();
     }
-    public void addOrderlog(String log){
+    public void addOrderLog(String log){
         orderlogs.push(log);
     }
     private void mostRecentLogEntry(){

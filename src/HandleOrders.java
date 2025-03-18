@@ -54,7 +54,7 @@ public class HandleOrders {
                         numberOfPizzasOrdered++;
                         j++;
                         String log1="Ordered: "+PizzaSelection.PEPPERONI.getPizzaName();
-                        orderLogs.addOrderlog(log1);
+                        orderLogs.addOrderLog(log1);
                         break;
                     case 2:
                         System.out.println("You have selected " + PizzaSelection.HAWAIIAN);
@@ -63,7 +63,7 @@ public class HandleOrders {
                         numberOfPizzasOrdered++;
                         j++;
                         String log2="Ordered: "+PizzaSelection.HAWAIIAN.getPizzaName();
-                        orderLogs.addOrderlog(log2);
+                        orderLogs.addOrderLog(log2);
                         break;
                     case 3:
                         System.out.println("You have selected " + PizzaSelection.VEGGIE);
@@ -72,7 +72,7 @@ public class HandleOrders {
                         numberOfPizzasOrdered++;
                         j++;
                         String log3="Ordered: "+PizzaSelection.VEGGIE.getPizzaName();
-                        orderLogs.addOrderlog(log3);
+                        orderLogs.addOrderLog(log3);
                         break;
                     case 4:
                         System.out.println("You have selected " + PizzaSelection.BBQ_CHICKEN);
@@ -81,7 +81,7 @@ public class HandleOrders {
                         numberOfPizzasOrdered++;
                         j++;
                         String log4="Ordered: "+PizzaSelection.BBQ_CHICKEN.getPizzaName();
-                        orderLogs.addOrderlog(log4);
+                        orderLogs.addOrderLog(log4);
                         break;
                     case 5:
                         System.out.println("You have selected " + PizzaSelection.EXTRAVAGANZA);
@@ -90,7 +90,7 @@ public class HandleOrders {
                         numberOfPizzasOrdered++;
                         j++;
                         String log5="Ordered: "+PizzaSelection.EXTRAVAGANZA.getPizzaName();
-                        orderLogs.addOrderlog(log5);
+                        orderLogs.addOrderLog(log5);
                         break;
                     default:
                         System.out.println("Incorrect choice. Please try again.");
@@ -130,12 +130,12 @@ public class HandleOrders {
                 
                 customPizza.append(": €" + customPizzaPrice);
 
-                pizzasOrdered[j] = customPizza.toString();
+                pizzasOrdered[j] ="Custom Pizza with "+topping+customPizza.toString();
                 totalOrderPrice += customPizzaPrice;
                 numberOfPizzasOrdered++;
                 j++;
                 String customlog="Custom Pizza with toppings: "+topping;
-                orderLogs.addOrderlog(customlog);
+                orderLogs.addOrderLog(customlog);
             }
 
             i = 1;
