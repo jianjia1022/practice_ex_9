@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HandleOrders {
@@ -11,6 +12,15 @@ public class HandleOrders {
     private double totalOrderPrice = 0.0;
     private int numberOfPizzasOrdered = 0;
     StringBuilder pizzaOrderSummary = new StringBuilder();
+    private ArrayList<CustomPizza> customPizzas=new ArrayList<>();
+    private OrderLogs orderLogs=new OrderLogs();
+    private OrderQueue orderQueue=new OrderQueue();
+    public OrderLogs  getOrderLogs(){
+        return orderLogs;
+    }
+    public OrderQueue getOrderQueue(){
+        return orderQueue;
+    }
 
     Scanner input = new Scanner(System.in);
 
@@ -23,7 +33,7 @@ public class HandleOrders {
 
         do{
             int i = 1;
-            System.out.println("Welcome to Slice-o-Heaven Pizzeria. Here’s what we serve: \n");
+            System.out.println("Welcome to Slice-o-Heaven Pizzeria. Here's what we serve: \n");
             for(PizzaSelection pizza : PizzaSelection.values()){
                 System.out.println(i + ". " + pizza);
                 i++;
@@ -43,6 +53,8 @@ public class HandleOrders {
                         totalOrderPrice += PizzaSelection.PEPPERONI.getPrice();
                         numberOfPizzasOrdered++;
                         j++;
+                        String log1="Ordered: "+PizzaSelection.PEPPERONI.getPizzaName();
+                        orderLogs.addOrderlog(log1);
                         break;
                     case 2:
                         System.out.println("You have selected " + PizzaSelection.HAWAIIAN);
@@ -50,6 +62,8 @@ public class HandleOrders {
                         totalOrderPrice += PizzaSelection.HAWAIIAN.getPrice();
                         numberOfPizzasOrdered++;
                         j++;
+                        String log2="Ordered: "+PizzaSelection.HAWAIIAN.getPizzaName();
+                        orderLogs.addOrderlog(log2);
                         break;
                     case 3:
                         System.out.println("You have selected " + PizzaSelection.VEGGIE);
@@ -57,6 +71,8 @@ public class HandleOrders {
                         totalOrderPrice += PizzaSelection.VEGGIE.getPrice();
                         numberOfPizzasOrdered++;
                         j++;
+                        String log3="Ordered: "+PizzaSelection.VEGGIE.getPizzaName();
+                        orderLogs.addOrderlog(log3);
                         break;
                     case 4:
                         System.out.println("You have selected " + PizzaSelection.BBQ_CHICKEN);
@@ -64,6 +80,8 @@ public class HandleOrders {
                         totalOrderPrice += PizzaSelection.BBQ_CHICKEN.getPrice();
                         numberOfPizzasOrdered++;
                         j++;
+                        String log4="Ordered: "+PizzaSelection.BBQ_CHICKEN.getPizzaName();
+                        orderLogs.addOrderlog(log4);
                         break;
                     case 5:
                         System.out.println("You have selected " + PizzaSelection.EXTRAVAGANZA);
@@ -71,6 +89,8 @@ public class HandleOrders {
                         totalOrderPrice += PizzaSelection.EXTRAVAGANZA.getPrice();
                         numberOfPizzasOrdered++;
                         j++;
+                        String log5="Ordered: "+PizzaSelection.EXTRAVAGANZA.getPizzaName();
+                        orderLogs.addOrderlog(log5);
                         break;
                     default:
                         System.out.println("Incorrect choice. Please try again.");
@@ -78,7 +98,7 @@ public class HandleOrders {
                 }
             } else if (choice == 6){
                 double customPizzaPrice = 0;
-                
+                StringBuilder customPizzaTopping =new StringBuilder();
                 System.out.println("For your custom pizza, here are the toppings:");
                 int k = 1;
                 for(PizzaToppings topping : PizzaToppings.values()){
@@ -97,10 +117,14 @@ public class HandleOrders {
                     if(toppingChoice == 0){
                         break;
                     }
-                    customPizza.append(PizzaToppings.values()[toppingChoice-1].getTopping() + ", ");
+                    String toppingName=PizzaToppings.values()[toppingChoice-1].getTopping();
+                    customPizzaTopping.append(toppingName).append(", ");
                     customPizzaPrice += PizzaToppings.values()[toppingChoice-1].getToppingPrice();
                     l++;
                 }while(l!=10 || l!=0);
+                String topping=customPizzaTopping.toString();
+                CustomPizza customPizzaDetail=new CustomPizza(topping, customPizzaPrice);
+                customPizzas.add(customPizzaDetail);
                 
                 customPizzaPrice += PIZZA_BASE_PRICE;
                 
@@ -110,8 +134,8 @@ public class HandleOrders {
                 totalOrderPrice += customPizzaPrice;
                 numberOfPizzasOrdered++;
                 j++;
-
-
+                String customlog="Custom Pizza with toppings: "+topping;
+                orderLogs.addOrderlog(customlog);
             }
 
             i = 1;
@@ -162,10 +186,20 @@ public class HandleOrders {
             System.out.println("Would you like to order another pizza? (Y/N): \n");
             orderAnother = input.nextLine();
             
-
+            String queueEntry="Pizza: "+pizzasOrdered[j-1]+"\n"+
+                              "Size: "+pizzaSizesOrdered[m-1]+"\n"+
+                              "Side: "+sideDishesOrdered[n-1]+"\n"+
+                              "Drink: "+drinksOrdered[p-1];
+            orderQueue.addOrder(queueEntry);
         }while(orderAnother.equalsIgnoreCase("Y"));
 
 
+    }
+    public void displayCustomPizzas(){
+        System.out.println("\n---Custom Pizzas Ordered---");
+        for(CustomPizza pizza:customPizzas){
+            System.out.println(pizza);
+        }
     }
 
     public void createOrderSummary(){
@@ -181,7 +215,7 @@ public class HandleOrders {
         }
 
         pizzaOrderSummary.append("ORDER TOTAL: €" + totalOrderPrice + "\n");
-
+        orderQueue.addOrder("Complete Order:\n"+pizzaOrderSummary.toString());
     }
 
     @Override
